@@ -86,3 +86,65 @@ app.get("/goals", (req, res) => {
   );
 
 });
+
+// GET ONE GOAL
+app.get("/goals/:id", (req, res) => {
+
+  db.get(
+    "SELECT * FROM goals WHERE id = ?",
+    [req.params.id],
+
+    (err, row) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      // not found
+      if (!row) {
+        return res.status(404).json({
+          error: "Goal not found"
+        });
+      }
+
+      res.status(200).json(row);
+
+    }
+  );
+
+});
+
+// UPDATE GOAL
+app.put("/goals/:id", (req, res) => {
+
+  const { title, category, completed } = req.body;
+
+  db.run(
+    `
+    UPDATE goals
+    SET title = ?, category = ?, completed = ?
+    WHERE id = ?
+    `,
+    [title, category, completed, req.params.id],
+
+    function (err) {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      // no goal found
+      if (this.changes === 0) {
+        return res.status(404).json({
+          error: "Goal not found"
+        });
+      }
+
+      res.status(200).json({
+        message: "Goal updated"
+      });
+
+    }
+  );
+
+});
