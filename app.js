@@ -33,3 +33,56 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
+
+// CREATE GOAL
+app.post("/goals", (req, res) => {
+
+  const { title, category } = req.body;
+
+  // validation
+  if (!title || title.trim() === "") {
+    return res.status(400).json({
+      error: "Title is required"
+    });
+  }
+
+  db.run(
+    "INSERT INTO goals (title, category) VALUES (?, ?)",
+    [title, category],
+
+    function (err) {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.status(201).json({
+        id: this.lastID,
+        title,
+        category,
+        completed: 0
+      });
+
+    }
+  );
+
+});
+
+// GET ALL GOALS
+app.get("/goals", (req, res) => {
+
+  db.all(
+    "SELECT * FROM goals",
+
+    (err, rows) => {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.status(200).json(rows);
+
+    }
+  );
+
+});
