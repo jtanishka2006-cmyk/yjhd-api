@@ -148,3 +148,32 @@ app.put("/goals/:id", (req, res) => {
   );
 
 });
+
+// DELETE GOAL
+app.delete("/goals/:id", (req, res) => {
+
+  db.run(
+    "DELETE FROM goals WHERE id = ?",
+    [req.params.id],
+
+    function (err) {
+
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      // if nothing deleted
+      if (this.changes === 0) {
+        return res.status(404).json({
+          error: "Goal not found"
+        });
+      }
+
+      res.status(200).json({
+        message: "Goal deleted"
+      });
+
+    }
+  );
+
+});
