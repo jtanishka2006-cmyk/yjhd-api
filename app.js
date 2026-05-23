@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS goals (
 
 // TEST ROUTE
 app.get("/", (req, res) => {
-  res.send("YJHD API running");
+  res.send("Bucket List Planner API running");
 });
 
 // SERVER
@@ -153,7 +153,7 @@ app.put("/goals/:id", (req, res) => {
 app.delete("/goals/:id", (req, res) => {
 
   db.run(
-    "DELETE FROM goals WHERE id = ?",
+    "DELETE FROM goals WHERE id = ?", 
     [req.params.id],
 
     function (err) {

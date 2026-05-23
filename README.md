@@ -1,38 +1,15 @@
-# 🎯 YJHD Bucket List API
+# Bucket List Planner API
 
-A simple REST API built using Node.js, Express, and SQLite.
-
-This project allows users to manage bucket list goals using CRUD operations.
-
----
-
-## 🚀 Features
-
-- Create goals
-- Read all goals
-- Read goal by ID
-- Update goals
-- Delete goals
-- SQLite database storage
-- REST API tested with Postman
-
----
-
-## 🛠 Tech Stack
-
+REST API made with:
 - Node.js
 - Express.js
 - SQLite3
 
----
+Features:
+- Create goals
+- Get all goals
+- Get one goal
+- Update goals
+- Delete goals
 
-## 📡 API Endpoints
-
-### ➕ Create Goal
-POST /goals
-
-```json
-{
-  "title": "Visit Japan",
-  "category": "travel"
-}
+Tested with Postman.
